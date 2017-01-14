@@ -13,13 +13,13 @@ select role from enrolmentapp.role
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Release Enrolment Login</title>
+<title>Enrolment Login</title>
 </head>
 <body>
 
 <form action="LoginServlet" method="post">
 <table frame="box">
-	<thead> <font color="green"><b>Login to Release Enrolment Tool</b></font></thead>
+	<thead> <font color="green"><b>Login to Enrolment Tool</b></font></thead>
 	<tr>
 		<td>
 			<table border="0">

@@ -20,7 +20,7 @@
 <div class="container">
 
 <header>
-   <h1>Release Enrolment Tool</h1>
+   <h1>Enrolment Tool</h1>
 </header>
   
 <nav>
