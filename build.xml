@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<project basedir="." default="war" name="enrolmentapp">
+    
+    <property file="build.properties" />
+    <property name="target" value="1.8"/>
+    <property name="source" value="1.8"/>
+
+    <path id="tomcat.libraryclasspath">
+        <pathelement location="../../tomcat_libs/lib/catalina-ant.jar"/>
+        <pathelement location="../../tomcat_libs/lib/catalina-ha.jar"/>
+        <pathelement location="../../tomcat_libs/lib/catalina-storeconfig.jar"/>
+        <pathelement location="../../tomcat_libs/lib/catalina-tribes.jar"/>
+        <pathelement location="../../tomcat_libs/lib/catalina.jar"/>
+        <pathelement location="../../tomcat_libs/lib/ecj-4.5.jar"/>
+        <pathelement location="../../tomcat_libs/lib/el-api.jar"/>
+        <pathelement location="../../tomcat_libs/lib/jasper-el.jar"/>
+        <pathelement location="../../tomcat_libs/lib/jasper.jar"/>
+        <pathelement location="../../tomcat_libs/lib/jsp-api.jar"/>
+        <pathelement location="../../tomcat_libs/lib/jstl-1.2.jar"/>
+        <pathelement location="../../tomcat_libs/lib/mysql-connector-java-5.1.39-bin.jar"/>
+        <pathelement location="../../tomcat_libs/lib/servlet-api.jar"/>
+        <pathelement location="../../tomcat_libs/lib/tomcat-api.jar"/>
+        <pathelement location="../../tomcat_libs/lib/tomcat-coyote.jar"/>
+        <pathelement location="../../tomcat_libs/lib/tomcat-dbcp.jar"/>
+        <pathelement location="../../tomcat_libs/lib/tomcat-i18n-es.jar"/>
+        <pathelement location="../../tomcat_libs/lib/tomcat-i18n-fr.jar"/>
+        <pathelement location="../../tomcat_libs/lib/tomcat-i18n-ja.jar"/>
+        <pathelement location="../../tomcat_libs/lib/tomcat-jdbc.jar"/>
+        <pathelement location="../../tomcat_libs/lib/tomcat-jni.jar"/>
+        <pathelement location="../../tomcat_libs/lib/tomcat-util-scan.jar"/>
+        <pathelement location="../../tomcat_libs/lib/tomcat-util.jar"/>
+        <pathelement location="../../tomcat_libs/lib/tomcat-websocket.jar"/>
+        <pathelement location="../../tomcat_libs/lib/websocket-api.jar"/>
+    </path>
+    <path id="project-libs">
+        <pathelement location="WebContent/WEB-INF/lib/*.jar"/>
+    </path>
+	<path id="enrolmentapp.classpath">
+        <pathelement location="build/classes"/>
+        <path refid="tomcat.libraryclasspath"/>
+        <path refid="project-libs"/>
+    </path>
+    <target name="init">
+        <mkdir dir="build/classes"/>
+        <copy includeemptydirs="false" todir="build/classes">
+            <fileset dir="src">
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="clean">
+        <delete dir="build/classes"/>
+    </target>
+ 	
+    <target depends="init" name="build">
+        <echo message="${ant.project.name}: ${ant.file}"/>
+        <javac destdir="build/classes" includeantruntime="false" source="${source}" target="${target}">
+            <src path="src"/>
+            <classpath refid="enrolmentapp.classpath"/>
+        </javac>
+    </target>
+	
+	<target name="war" description="Bundles the application as war file" depends="clean, build">
+		<mkdir dir="WebContent/WEB-INF/classes"/>
+		<copy includeemptydirs="false" todir="WebContent/WEB-INF/classes">
+			<fileset dir="build/classes">
+				<include name="**/*.class"/>
+			</fileset>
+		</copy>
+		<war destfile="enrolmentapp.war"
+				basedir="WebContent">
+		</war>	
+	</target>
+	
+	<target name="copyWAR" depends="war">
+		<mkdir dir="../../deploy"/>
+		<copy file="enrolmentapp.war" todir="../../deploy" />
+	</target>
+	
+</project>
