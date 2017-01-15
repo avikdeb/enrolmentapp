@@ -20,7 +20,7 @@
 <div class="container">
 
 <header>
-   <h1>Enrolment Tool</h1>
+   <h1>Enrolment Tool ver.1.0</h1>
 </header>
   
 <nav>
