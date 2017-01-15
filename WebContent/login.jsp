@@ -20,8 +20,7 @@ select role from enrolmentapp.role
 <form action="LoginServlet" method="post">
 <table frame="box">
 	<thead>
-		<font color="green"><b>Enrolment Tool Login</b></font>
-		<font color="red">Ver.1.0</font>
+		<font color="green"><b>Enrolment Tool Login Ver.1.0</b></font>
 	</thead>
 	<tr>
 		<td>
