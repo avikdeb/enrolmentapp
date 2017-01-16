@@ -80,21 +80,21 @@
 				<include name="**/*.class"/>
 			</fileset>
 		</copy>
-		<war destfile="${basedir}/enrolmentapp.war"
+		<war destfile="${basedir}/${artifact.name}-${artifact.version}.${artifact.type}"
 				basedir="WebContent">
 		</war>	
 	</target>
 	
 	<target name="copyWAR" depends="war">
 		<mkdir dir="../../deploy"/>
-		<copy file="enrolmentapp.war" todir="../../deploy" />
+		<copy file="${artifact.name}-${artifact.version}.${artifact.type}" todir="../../deploy" />
 	</target>
 	
 	<!-- deploy task for creating and writing a temp pom file and deploying the artifact with that pom -->
 	<target name="deployArtifactory">
-		<artifact:pom id="tmp.pom" groupid="${artifact.group}" artifactid="${artifact.name}" version="${artifact.version}" packaging="{${artifact.type}" name="${artifact.name}" />
+		<artifact:pom id="tmp.pom" groupid="${artifact.group}" artifactid="${artifact.name}" version="${artifact.version}" packaging="${artifact.type}" name="${artifact.name}" />
 		<artifact:writepom pomRefId="tmp.pom" file="${artifact.pom}"/>
-		<artifact:deploy file="${basedir}/enrolmentapp.war">
+		<artifact:deploy file="${basedir}/${artifact.name}-${artifact.version}.${artifact.type}">
 			<remoterepository url="${remote.repo.url}">
 				<authentication username="${remote.repo.username}" password="${remote.repo.password}" />	
 			</remoterepository>
