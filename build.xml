@@ -1,11 +1,23 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 
-<project basedir="." default="war" name="enrolmentapp">
+<project basedir="." default="war" name="enrolmentapp" xmlns:artifact="antlib:org.apache.maven.artifact.ant">
     
     <property file="build.properties" />
     <property name="target" value="1.8"/>
     <property name="source" value="1.8"/>
-
+	
+	<!-- artifact-properties -->
+	<property name="artifact.group" value="enrolmentapp" />
+	<property name="artifact.name" value="enrolmentapp" />
+	<property name="artifact.version" value="1.0.0" />
+	<property name="artifact.type" value="war" />
+	<property name="artifact.pom" value="pom.xml" />
+	
+	<!-- remote repo -->
+	<property name="remote.repo.url" value="http://inspiron.avikdeb.com:8081/artifactory/ext-release-local" />
+	<property name="remote.repo.username" value="admin" />
+	<property name="remote.repo.password" value="password" />
+	
     <path id="tomcat.libraryclasspath">
         <pathelement location="../../tomcat_libs/lib/catalina-ant.jar"/>
         <pathelement location="../../tomcat_libs/lib/catalina-ha.jar"/>
@@ -76,6 +88,33 @@
 	<target name="copyWAR" depends="war">
 		<mkdir dir="../../deploy"/>
 		<copy file="enrolmentapp.war" todir="../../deploy" />
+	</target>
+	
+	<!-- deploy task for creating and writing a temp pom file and deploying the artifact with that pom -->
+	<target name="deployArtifactory">
+		<artifact:pom id="tmp.pom" groupid="${artifact.group}" artifactid="${artifact.name}" version="${artifact.version}" packaging="{${artifact.type}" name="${artifact.name}" />
+		<artifact:writepom pomRefId="tmp.pom" file="${artifact.pom}"/>
+		<!--artifact:deploy file="${basedir}/${artifact.name}-${artifact.version}.${artifact.type}"-->
+		<artifact:deploy file="${basedir}/${artifact.name}.${artifact.type}">
+			<remoterepository url="${remote.repo.url}">
+				<authentication username="${remote.repo.username}" password="${remote.repo.password}" />	
+			</remoterepository>
+			<pom file="${artifact.pom}" />
+		</artifact:deploy>
+	</target>
+	
+	
+	<target name="deployArtifactory_old" depends="war" description="Deploy war to Artifactory">
+		<artifact:pom id="warPom" file="warPom.xml" />
+	    <artifact:install file="enrolmentapp.war">
+	    <pom refid="warPom" />
+	    </artifact:install>
+			<artifact:deploy file="enrolmentapp.war">
+	        <remoteRepository url="${artifactory.url}">
+	        <authentication username="${artifactory.user}" password="${artifactory.password}" />
+	    </remoteRepository>
+	    <pom refid="warPom" />
+	    </artifact:deploy>
 	</target>
 	
 </project>
