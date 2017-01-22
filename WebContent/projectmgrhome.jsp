@@ -65,12 +65,12 @@
 	</tr>
 	<c:forEach var="row" items="${rs.rows}">
 	<tr>
-		<td>${row.releasename}</td>
+		<td><a href="underconstruction.jsp">${row.releasename}</td>
 		<td>${row.releasestartdate}</td>
 		<td>${row.releaseenddate}</td>
 		<td>${row.desc}</td>
 		<td>5</td>
-		<td>${row.status}</td>
+		<td><font color="green">${row.status}</font></td>
 	</tr>
 	</c:forEach>
 </table>
